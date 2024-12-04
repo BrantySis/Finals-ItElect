@@ -18,7 +18,9 @@
     },
     "dependencies": {
         "laralabs-vue-toaster": "^3.0.1",
+        "notyf": "^3.10.0",
         "preline": "^2.5.1",
-        "toastr": "^2.1.4"
+        "toastr": "^2.1.4",
+        "velocity-animate": "^1.5.2"
     }
 }

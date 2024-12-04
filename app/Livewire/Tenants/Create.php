@@ -43,29 +43,27 @@ class Create extends Component
     }
 
     public function submit()
-    {
-        // Validate the form
-        $validatedData = $this->validate();
+{
+    $validatedData = $this->validate();
 
-        // Create the tenant
-        Tenant::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'contact' => $validatedData['contact'],
-            'apartment_id' => $this->apartment_id,  // Automatically set apartment
-            'room_id' => $validatedData['room_id'],
-        ]);
+    Tenant::create([
+        'name' => $validatedData['name'],
+        'email' => $validatedData['email'],
+        'contact' => $validatedData['contact'],
+        'apartment_id' => $this->apartment_id,
+        'room_id' => $validatedData['room_id'],
+    ]);
 
-        // Mark room as unavailable (occupied)
-        $room = Room::find($validatedData['room_id']);
-        $room->availability = false;
-        $room->save();
+    $room = Room::find($validatedData['room_id']);
+    $room->availability = false;
+    $room->save();
 
-        // Reset form fields
-        $this->reset();
+    $this->emit('tenantAdded'); // Emit event
 
-        return redirect()->route('tenants.index');
-    }
+    $this->reset();
+
+    session()->flash('message', 'Tenant added successfully!');
+}
 
     public function render()
     {

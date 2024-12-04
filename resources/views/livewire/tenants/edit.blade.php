@@ -1,86 +1,66 @@
-<div>
-    <div class="py-12">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+<div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-8">
+    <h2 class="font-semibold text-2xl text-gray-800 dark:text-gray-200 mb-6">
+        {{ __('Edit Tenant') }}
+    </h2>
 
-                    {{-- Edit content --}}
-                    <div class="flex flex-col gap-y-4">
-                        <div class="flex flex-col gap-y-1">
-                            <h1 class="text-xl font-bold">Tenant Information</h1>
-                            <p class="text-sm text-gray-500">Fill out this form to edit tenant information</p>
-                        </div>
-
-                        {{-- Edit Tenant Form --}}
-                        <form wire:submit='update'>
-                            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                                <div>
-                                    <label for="name" class="block mb-2 text-sm font-medium dark:text-white">Name</label>
-                                    <input 
-                                    type="text" 
-                                    id="name" 
-                                    wire:model.blur="form.name" 
-                                    class="block w-full px-4 py-3 text-sm rounded-lg border-gray-200 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 
-                                    @error('form.name')
-                                        text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300
-                                    @enderror
-                                    ">
-                                    @error('form.name')
-                                        <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div>
-                                    <label for="email" class="block mb-2 text-sm font-medium dark:text-white">Email</label>
-                                    <input 
-                                    type="email" 
-                                    id="email"
-                                    wire:model.blur="form.email" 
-                                    class="block w-full px-4 py-3 text-sm rounded-lg border-gray-200 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500                                     
-                                    @error('form.email')
-                                        text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300
-                                    @enderror
-                                    ">
-                                    @error('form.email')
-                                        <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div>
-                                    <label for="room_id" class="block mb-2 text-sm font-medium dark:text-white">Room</label>
-                                    <select 
-                                    id="room_id" 
-                                    wire:model.live="form.room_id"
-                                    class="block w-full px-4 py-3 text-sm rounded-lg border-gray-200 pe-9 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600
-                                        @error('form.room_id')
-                                            text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300
-                                        @enderror
-                                    ">
-                                        <option value="">Select a room</option>
-                                        @foreach ($rooms as $room)
-                                            <option value="{{ $room->id }}">{{ $room->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('form.room_id')
-                                        <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="flex justify-end mt-4 gap-x-3">
-                                <a href="{{ route('tenants.index') }}" wire:navigate class="inline-flex items-center px-4 py-3 text-sm font-medium text-indigo-800 bg-indigo-100 border border-transparent rounded-lg gap-x-2 hover:bg-indigo-200 focus:outline-none focus:bg-indigo-200 disabled:opacity-50 disabled:pointer-events-none dark:text-indigo-400 dark:hover:bg-indigo-900 dark:focus:bg-indigo-900">
-                                    Cancel
-                                </a>
-                                <button type="submit" class="px-4 py-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-lg gap-x-2 hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700 disabled:opacity-50 disabled:pointer-events-none">
-                                    Update
-                                </button>
-                            </div>
-                        </form>
-                        {{-- End of Edit Tenant Form --}}
-                    </div>
-
-                    {{-- End of Edit content --}}
-
-                </div>
+    <form wire:submit.prevent="updateTenant" class="space-y-6">
+        @if (session()->has('message'))
+            <div class="bg-green-500 text-white p-4 rounded-md shadow-md">
+                {{ session('message') }}
             </div>
+        @endif
+
+        <!-- Tenant Name -->
+        <div class="mb-6">
+            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tenant Name</label>
+            <input type="text" id="name" wire:model="form.name" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-blue-400" required>
+            @error('form.name')
+                <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
+            @enderror
         </div>
-    </div>
+
+        <!-- Tenant Email -->
+        <div class="mb-6">
+            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tenant Email</label>
+            <input type="email" id="email" wire:model="form.email" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-blue-400" required>
+            @error('form.email')
+                <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <!-- Tenant Contact -->
+        <div class="mb-6">
+            <label for="contact" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tenant Contact</label>
+            <input type="text" id="contact" wire:model="form.contact" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-blue-400" required>
+            @error('form.contact')
+                <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <!-- Select Room -->
+        <div class="mb-6">
+            <label for="room_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Select Room</label>
+            <select id="room_id" wire:model="form.room_id" class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-blue-400" required>
+                <option value="" disabled>Select a room</option>
+                @foreach($rooms as $room)
+                    <option value="{{ $room->id }}" @if($room->id == $form->room_id) selected @endif>
+                        {{ $room->room_number }} || {{ $room->apartment->name }}
+                    </option>
+                @endforeach
+            </select>
+            @error('form.room_id')
+                <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <!-- Submit Button -->
+        <div class="flex items-center space-x-4">
+            <button type="submit" class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50" wire:loading.attr="disabled">
+                <span wire:loading.remove>Update Tenant</span>
+                <span wire:loading>Submitting...</span>
+            </button>
+        </div>
+    </form>
 </div>
+
 

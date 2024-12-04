@@ -7,6 +7,7 @@ use App\Livewire\Tenants\Index;
 use App\Livewire\Tenants\Payments;
 use App\Livewire\Tenants\Create;
 use App\Livewire\Tenants\Edit;
+use App\Models\Tenant;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,8 +24,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/tenants', Index::class)->name('tenants.index'); 
     Route::get('/tenants-payments', Payments::class)->name('tenants.payments');
-    Route::get('/tenants-create', Create::class)->name('tenants.create');
-    Route::get('/tenants/edit/{tenant}', Edit::class)->name('tenants.edit');
+    Route::get('/tenants-create', App\Livewire\Tenants\Create::class)->name('tenants.create');
+    Route::get('/tenants/{tenant}/edit', Edit::class)->name('tenants.edit');
+
 
 });
 

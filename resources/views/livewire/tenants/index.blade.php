@@ -70,8 +70,9 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{{ $tenant->contact }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{{ $tenant->email }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                            <button type="button" class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400">Delete</button>
-                            <a href="{{ route('tenants.edit', $tenant->id) }}" class="text-blue-500">Edit</a>
+                        <button wire:click="deleteTenant({{ $tenant->id }})" class="bg-yellow-500 text-red p-2 rounded">Delete|</button>
+                        
+                            <a href="{{ route('tenants.edit', $tenant->id) }}">|Edit</a>
                         </td>
                     </tr>
                 @endforeach

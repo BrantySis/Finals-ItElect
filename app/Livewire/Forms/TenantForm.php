@@ -14,6 +14,12 @@ class TenantForm extends Form
     public $contact;
     public $room_id;
 
+    // Constructor to pass the component and property name
+    public function __construct($component, $propertyName)
+    {
+        parent::__construct($component, $propertyName); // Pass the required arguments to the parent constructor
+    }
+
     public function rules()
     {
         $rules = [
@@ -28,6 +34,17 @@ class TenantForm extends Form
         }
 
         return $rules;
+    }
+
+    public static function fromModel(Tenant $tenant, $component, $propertyName)
+    {
+        $form = new static($component, $propertyName); // Pass the component and propertyName to the constructor
+        $form->name = $tenant->name;
+        $form->contact = $tenant->contact;
+        $form->email = $tenant->email;
+        $form->room_id = $tenant->room_id;
+
+        return $form;
     }
 
     public function setTenant(Tenant $tenant)
@@ -49,4 +66,5 @@ class TenantForm extends Form
         ];
     }
 }
+
 

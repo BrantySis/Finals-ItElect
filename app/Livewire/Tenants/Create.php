@@ -1,77 +1,67 @@
 <?php
+
 namespace App\Livewire\Tenants;
 
-use Livewire\Component;
+use App\Livewire\Forms\TenantForm;
 use App\Models\Room;
+use App\Models\Apartment;
 use App\Models\Tenant;
+use Livewire\Component;
 
 class Create extends Component
 {
-    public $name;
-    public $email;
-    public $contact;
-    public $room_id;
-    public $apartment_id; // Will store the apartment name or id
+    public TenantForm $form; // Form object for tenant creation
 
-    public $rooms = [];
-
-    // Validation rules
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:tenants,email',
-        'contact' => 'required|string|max:15',
-        'room_id' => 'required|exists:rooms,id',
-    ];
-
-    // When the component is mounted, fetch available rooms
-    public function mount()
-    {
-        // Fetch available rooms (availability = true)
-        $this->rooms = Room::where('availability', true)->get();
-    }
-
-    // Update apartment_id when a room is selected
-    public function updatedRoomId($roomId)
-    {
-        // Find the selected room
-        $room = Room::find($roomId);
-
-        // Automatically set the apartment_id based on the selected room
-        if ($room) {
-            $this->apartment_id = $room->apartment->name ?? 'N/A'; // Adjust this to show the apartment name or other identifier
-        }
-    }
-
-    public function submit()
-{
-    $validatedData = $this->validate();
-
-    Tenant::create([
-        'name' => $validatedData['name'],
-        'email' => $validatedData['email'],
-        'contact' => $validatedData['contact'],
-        'apartment_id' => $this->apartment_id,
-        'room_id' => $validatedData['room_id'],
-    ]);
-
-    $room = Room::find($validatedData['room_id']);
-    $room->availability = false;
-    $room->save();
-
-    $this->emit('tenantAdded'); // Emit event
-
-    $this->reset();
-
-    session()->flash('message', 'Tenant added successfully!');
-}
+    public $rooms = []; // Stores available rooms
 
     public function render()
     {
         return view('livewire.tenants.create', [
-            'rooms' => $this->rooms,  // Pass available rooms to the view
+            'apartments' => Apartment::all(), 
+           // Pass all apartments to the view
         ]);
     }
+
+    public function updated($property)
+    {
+        if ($property === 'form.apartment_id') {
+            // Update the list of rooms based on the selected apartment
+            $this->rooms = Room::where('apartment_id', $this->form->apartment_id)
+                ->where('availability', true)
+                ->get();
+        }
+    }
+    public function mount()
+    {
+        // Fetch rooms from the database
+        $this->rooms = Room::with('apartment')->where('availability', true)->get();
+    }
+
+    public function addTenant()
+    {
+        $this->validate();
+
+        // Create the tenant
+        Tenant::create(
+            $this->form->all()
+        );
+
+        // Update room availability
+        if ($this->form->room_id) {
+            $room = Room::find($this->form->room_id);
+            if ($room) {
+                $room->availability = false;
+                $room->save();
+            }
+        }
+
+        
+
+        // Redirect back to the tenants index page
+        return $this->redirect(Index::class, navigate: true);
+    }
 }
+
 
 
 

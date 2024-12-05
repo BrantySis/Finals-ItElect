@@ -15,28 +15,35 @@
                         Welcome to the Apartment Rental Dashboard
                     </h3>
                     
-                    <!-- Location and Hospitality Section -->
-                    <div class="space-y-6">
-                        <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md">
-                            <h4 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Apartment Location</h4>
-                            <p class="mt-4 text-gray-600 dark:text-gray-400">
-                                Our apartments are located in the heart of the city, offering easy access to local markets, restaurants, and entertainment centers. Whether you're looking for a quiet retreat or a vibrant neighborhood, our apartments provide the perfect balance of comfort and convenience.
-                            </p>
-                            <p class="mt-2 text-gray-600 dark:text-gray-400">
-                                Located just 10 minutes away from the nearest subway station, you're never far from everything you need. Our neighborhood is known for its safety, cleanliness, and community spirit, making it an ideal place to call home.
-                            </p>
-                        </div>
+                    <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+  <!-- Grid -->
+  <div class="grid gap-6 grid-cols-2 sm:gap-12 lg:grid-cols-3 lg:gap-8">
+    <!-- Stats -->
+    <div>
+      <h4 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-neutral-200">Apartments</h4>
+      <p class="mt-2 sm:mt-3 text-4xl sm:text-6xl font-bold text-blue-600">99.95%</p>
+      <p class="mt-1 text-gray-500 dark:text-neutral-500">in fulfilling orders</p>
+    </div>
+    <!-- End Stats -->
 
-                        <div class="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md">
-                            <h4 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Hospitality Services</h4>
-                            <p class="mt-4 text-gray-600 dark:text-gray-400">
-                                We take pride in offering top-notch hospitality services to all our tenants. From the moment you arrive, you'll be greeted with warmth and attention. Our on-site team is always available to assist with any needs, from maintenance requests to local recommendations.
-                            </p>
-                            <p class="mt-2 text-gray-600 dark:text-gray-400">
-                                We also offer exclusive amenities such as a fully-equipped fitness center, free Wi-Fi throughout the building, and a 24/7 concierge service. Our goal is to make your stay as comfortable and stress-free as possible.
-                            </p>
-                        </div>
-                    </div>
+    <!-- Stats -->
+    <div>
+      <h4 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-neutral-200">Rooms available</h4>
+      <p class="mt-2 sm:mt-3 text-4xl sm:text-6xl font-bold text-blue-600">7 rooms</p>
+      <p class="mt-1 text-gray-500 dark:text-neutral-500">fully furnitured</p>
+    </div>
+    <!-- End Stats -->
+
+    <!-- Stats -->
+    <div>
+      <h4 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-neutral-200">Happy customer</h4>
+      <p class="mt-2 sm:mt-3 text-4xl sm:text-6xl font-bold text-blue-600">85%</p>
+      <p class="mt-1 text-gray-500 dark:text-neutral-500">this year alone</p>
+    </div>
+    <!-- End Stats -->
+  </div>
+  <!-- End Grid -->
+</div>
                 </div>
             </div>
         </div>

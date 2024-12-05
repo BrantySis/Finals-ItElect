@@ -9,7 +9,7 @@
                 {{ session('message') }}
             </div>
         @endif
-
+    
         <!-- Tenant Name -->
         <div class="mb-6">
             <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tenant Name</label>

@@ -56,7 +56,9 @@ class Create extends Component
         }
 
         
+        session()->flash('message', 'Tenant Created successfully.');
 
+        
         // Redirect back to the tenants index page
         return $this->redirect(Index::class, navigate: true);
     }

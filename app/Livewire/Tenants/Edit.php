@@ -7,6 +7,7 @@ use App\Models\Room;
 use App\Models\Apartment;
 use App\Models\Tenant;
 use Livewire\Component;
+use Illuminate\Support\Facades\DB;
 
 class Edit extends Component
 {
@@ -43,26 +44,29 @@ class Edit extends Component
     public function updateTenant()
     {
         $this->validate();
-
-        // Update tenant details
-        $this->tenant->update($this->form->all());
-
-        // Handle room availability logic
-        if ($this->form->room_id && $this->form->room_id != $this->tenant->room_id) {
-            $previousRoom = Room::find($this->tenant->room_id);
-            if ($previousRoom) {
-                $previousRoom->availability = true;
-                $previousRoom->save();
+    
+        DB::transaction(function () {
+            // Handle room availability logic BEFORE updating the tenant
+            if ($this->form->room_id && $this->form->room_id != $this->tenant->room_id) {
+                $previousRoom = Room::find($this->tenant->room_id);
+                if ($previousRoom) {
+                    $previousRoom->availability = true;
+                    $previousRoom->save();
+                }
+    
+                $newRoom = Room::find($this->form->room_id);
+                if ($newRoom) {
+                    $newRoom->availability = false;
+                    $newRoom->save();
+                }
             }
-
-            $room = Room::find($this->form->room_id);
-            if ($room) {
-                $room->availability = false;
-                $room->save();
-            }
-        }
-
-        // Redirect to tenants index
+    
+            // Update tenant details
+            $this->tenant->update($this->form->all());
+        });
+    
+        session()->flash('message', 'Tenant Edited successfully.');
+    
         return $this->redirect(route('tenants.index'));
     }
 }

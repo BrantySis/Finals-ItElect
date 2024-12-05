@@ -19,6 +19,7 @@ class TenantForm extends Form
     {
         parent::__construct($component, $propertyName); // Pass the required arguments to the parent constructor
     }
+   
 
     public function rules()
     {
@@ -29,7 +30,7 @@ class TenantForm extends Form
             'room_id' => 'required|exists:rooms,id',
         ];
 
-        if (isset($this->tenant)) {
+        if (!empty($this->tenant) && $this->tenant instanceof App\Models\Tenant) {
             $rules['email'] = 'required|email|unique:tenants,email,' . $this->tenant->id;
         }
 
@@ -61,7 +62,7 @@ class TenantForm extends Form
     {
         return [
             'room_id.required' => 'The room field is required.',
-            'email.required' => 'The email field is required.',
+            
             'contact.required' => 'The contact field is required.',
         ];
     }

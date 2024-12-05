@@ -1,11 +1,10 @@
 import "./bootstrap";
 import "preline";
-import toastr from 'toastr';
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
-import 'toastr/build/toastr.min.css';
-import Notifications from 'vue-notification';
-import velocity from 'velocity-animate';
+import Toastify from 'toastify-js';
+import 'toastify-js/src/toastify.css';
+
 // import Alpine from "alpinejs";
 
 // window.Alpine = Alpine;
@@ -17,6 +16,7 @@ function showToast(message, type = 'success') {
         message: message // The toast message to display
     });
 }
+
 
 document.addEventListener('livewire:load', function () {
     // Listen for a custom Livewire event (show-toast)
@@ -38,10 +38,5 @@ if (
 } else {
     document.documentElement.classList.remove("dark");
 }
-Vue.use(Notifications, { velocity });
-Vue.component('toaster-group', require('laralabs-vue-toaster/src/ToasterGroupComponent.vue'));
-Vue.component('toaster-logic', require('laralabs-vue-toaster/src/ToasterLogicComponent.vue'));
 
-let app = new Vue({
-  el: '#app',
-});
+

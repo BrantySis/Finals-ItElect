@@ -31,7 +31,7 @@ class TenantForm extends Form
         ];
 
         if (!empty($this->tenant) && $this->tenant instanceof App\Models\Tenant) {
-            $rules['email'] = 'required|email|unique:tenants,email,' . $this->tenant->id;
+            $rules['email'] = 'required|email|tenants,email,' . $this->tenant->id;
         }
 
         return $rules;

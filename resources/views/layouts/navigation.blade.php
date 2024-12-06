@@ -5,14 +5,14 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex items-center space-x-3 shrink-0">
-                    <a href="{{ route('dashboard') }}" wire:navigate>
+                    <a href="{{ route('home') }}" wire:navigate>
                         <x-application-logo class="block w-auto text-gray-800 fill-current h-9 dark:text-gray-200" />
                     </a>
                     
                 </div>
                     <!-- Navigation Links -->
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('dashboard')" wire:navigate :active="request()->routeIs('dashboard')">
+                        <x-nav-link :href="route('home')" wire:navigate :active="request()->routeIs('home')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
 
